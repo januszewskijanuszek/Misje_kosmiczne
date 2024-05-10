@@ -5,30 +5,25 @@
 * Main executable file in program
 */
 
-
+#include "static_func/static.hpp"
 #include <iostream>
 #include <cstdint>
 #include <string>
+#include <vector>
+#include <map>
+#include <functional>
 #include "input_handler/input_handler.hpp"
 
 using namespace std;
+using predefined_function = function<void(void)>;
+
 
 int main(int argc, char* argv[]){
-    uint32_t v_value = 0;
+    const std::vector<std::string> arguments(argv, argv + argc);
+    std::map<std::string, predefined_function> function_list;
+    function_list["-h"] = internal::help_flag;
+    function_list["-v"] = internal::version_flag;
+    function_list["-f"] = internal::run_flag;
 
-    // Loop through command line arguments
-    for(int i = 1 ; i < argc ; i++){
-        string arg = argv[i];
-        if(arg == "-v"){
-            if(i + 1 < argc){
-                v_value = stoi(argv[i + 1]);
-                i++;
-            } else {
-                cerr << "Error: -v flag requires a value." << endl;
-                return 1;
-            }
-        }
-    }
-    cout << "Value of -v flag: " << v_value << endl;
     return 0;
 }
