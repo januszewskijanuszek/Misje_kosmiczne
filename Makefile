@@ -3,6 +3,8 @@ OUTPUT_DIRECTORY := target
 output: $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o
 	g++ $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o -o output
 
+
+
 $(OUTPUT_DIRECTORY)/main.o: main.cpp | $(OUTPUT_DIRECTORY)
 	g++ -c main.cpp -o $(OUTPUT_DIRECTORY)/main.o
 
