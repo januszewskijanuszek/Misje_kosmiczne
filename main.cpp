@@ -5,18 +5,15 @@
 * Main executable file in program
 */
 
-#include "static_func/static.hpp"
-#include <iostream>
-#include <cstdint>
 #include <string>
 #include <vector>
 #include <map>
 #include <functional>
-#include "input_handler/input_handler.hpp"
+
+#include "static_func/static.hpp"
 
 using namespace std;
 using predefined_function = function<void(void)>;
-
 
 int main(int argc, char* argv[]){
     const std::vector<std::string> arguments(argv, argv + argc);
