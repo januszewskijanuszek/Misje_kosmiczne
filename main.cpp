@@ -9,8 +9,11 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <cstdlib>
 
-#include "static_func/static.hpp"
+#include <iostream>
+
+#include "src/static_func/static.hpp"
 
 using namespace std;
 using predefined_function = function<void(void)>;
@@ -22,5 +25,12 @@ int main(int argc, char* argv[]){
     function_list["-v"] = internal::version_flag;
     function_list["-f"] = internal::run_flag;
 
+    if(arguments.at(1) == "-f" && argc == 4){
+        internal::raw_input["filename"] = arguments.at(2);
+        internal::raw_input["date"] = arguments.at(3);
+    } else {
+        printf("Too many arguments or invalid flag!\n");
+        function_list["-h"]();
+    }
     return 0;
 }

@@ -3,13 +3,23 @@
 
 ## Wymagania systemowe
  - Kompilator g++
- - System operacyjny zgodny z g++
+ - Makefile
 
  Kompilacja
  Aby skompilować program, wykonaj poniższe kroki:
 
- <sup>g++ -o main.cpp</sup>
+`make` - buduje projekt. W folderze target znajdują się wszystkie pliki .o i tworzy się plik wykonywalny .exe
 
  Następnie uruchom program, wpisując:
 
- <sup>./nazwa_programu</sup>
+`output.exe [flaga]`
+
+ W miejsce flagi należy podać odpowiednią flagę
+
+    Help            -h - Display help
+    Version         -v - Display version
+    File            -f - [filename] [date dd-mm-rrrr]
+                example: -f brdc0940.23n 15-10-2015
+
+## Dodatkowe komendy
+- `make clear` - Czyszczenie outputu

@@ -15,7 +15,8 @@ void internal::help_flag(){
     printf("Help command\n");
     printf("Help            -h - Display help\n");
     printf("Version         -v - Display version\n");
-    printf("File            -f - -f [filename] [date dd-mm-rrrr] example: -f brdc0940.23n 15-10-2015 \n");
+    printf("File            -f - [filename] [date dd-mm-rrrr]\n");
+    printf("                example: -f brdc0940.23n 15-10-2015 \n");
 }
 
 void internal::run_flag(){
