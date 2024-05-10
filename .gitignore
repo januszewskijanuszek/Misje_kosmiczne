@@ -1,3 +1,5 @@
-a.exe
+output.exe
 .vscode/
 brdc0940.23n
+*.o
+target

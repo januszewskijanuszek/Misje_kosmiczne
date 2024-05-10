@@ -3,6 +3,7 @@
 
 ## Wymagania systemowe
  - Kompilator g++
+ - Makefile
  - System operacyjny zgodny z g++
 
  Kompilacja

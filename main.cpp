@@ -10,7 +10,7 @@
 #include <map>
 #include <functional>
 
-#include "static_func/static.hpp"
+#include "src/static_func/static.hpp"
 
 using namespace std;
 using predefined_function = function<void(void)>;
