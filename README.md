@@ -8,11 +8,11 @@
  Kompilacja
  Aby skompilować program, wykonaj poniższe kroki:
 
- <sup>make</sup>
+`make` - buduje projekt. W folderze target znajdują się wszystkie pliki .o i tworzy się plik wykonywalny .exe
 
  Następnie uruchom program, wpisując:
 
- <sup>output.exe [flaga]</sup>
+`output.exe [flaga]`
 
  W miejsce flagi należy podać odpowiednią flagę
 
@@ -22,4 +22,4 @@
                 example: -f brdc0940.23n 15-10-2015
 
 ## Dodatkowe komendy
-- <sup>make clear</sup> - Czyszczenie outputu
+- `make clear` - Czyszczenie outputu
