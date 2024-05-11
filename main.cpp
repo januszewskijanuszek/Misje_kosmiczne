@@ -15,17 +15,18 @@
 
 #include "src/static_func/static.hpp"
 
-using namespace std;
-using predefined_function = function<void(void)>;
+using predefined_function = std::function<void(void)>;
 
 int main(int argc, char* argv[]){
     const std::vector<std::string> arguments(argv, argv + argc);
     std::map<std::string, predefined_function> function_list;
     function_list["-h"] = internal::help_flag;
     function_list["-v"] = internal::version_flag;
+    function_list["-m"] = internal::run_mock;
     function_list["-f"] = internal::run_flag;
-
-    if(arguments.at(1) == "-f" && argc == 4){
+    if(argc == 2){
+        function_list[arguments.at(1)]();
+    }else if(arguments.at(1) == "-f" && argc == 4){
         internal::raw_input["filename"] = arguments.at(2);
         internal::raw_input["date"] = arguments.at(3);
     } else {

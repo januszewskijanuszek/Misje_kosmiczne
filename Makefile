@@ -1,7 +1,7 @@
 OUTPUT_DIRECTORY := target
 
 output: $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o $(OUTPUT_DIRECTORY)/file_reader.o
-	g++ $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o -o output
+	g++ $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o $(OUTPUT_DIRECTORY)/file_reader.o -o output
 
 $(OUTPUT_DIRECTORY)/file_reader.o: src/filer_reader/file_reader.cpp src/filer_reader/file_reader.hpp | $(OUTPUT_DIRECTORY)
 	g++ -c src/filer_reader/file_reader.cpp -o $(OUTPUT_DIRECTORY)/file_reader.o

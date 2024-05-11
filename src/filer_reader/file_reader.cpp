@@ -6,14 +6,17 @@
 
 #include "file_reader.hpp"
 
-bool FileReader::isMock = false;
+bool FileReader::mockFlag = false;
+std::map<std::string, double> FileReader::data;
 
-double FileReader::getData(const std::string& name){
+double FileReader::getData(const std::string name){
     return FileReader::data[name];
 } 
 
+bool FileReader::isMock(){return FileReader::mockFlag;}
+
 void FileReader::makeMock(){
-    FileReader::isMock = true;
+    FileReader::mockFlag = true;
     FileReader::data["crs"]     = 64.65625;
     FileReader::data["deln"]    = 3.68408202823e-09;
     FileReader::data["m0"]      = -3.12525956676;
