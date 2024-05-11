@@ -11,9 +11,11 @@
 #include <string>
 
 class FileReader{
-    std::map<std::string, double> data;
+    static std::map<std::string, double> data;
+    static bool isMock;
 public:
-    double getData(const std::string& name);
+    static double getData(const std::string& name);
+    static void makeMock();
 };
 
 #endif // INPUT_HANDLER_HPP
