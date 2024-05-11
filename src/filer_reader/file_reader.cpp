@@ -1,5 +1,5 @@
 /*
- * @file:         filer_reader/file_reader.cpp
+ * @file:         src/filer_reader/file_reader.cpp
  * @author:       Patryk Januszewski
  * @description:  File read conrtol
  */
