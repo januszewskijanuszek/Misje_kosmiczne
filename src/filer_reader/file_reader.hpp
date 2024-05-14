@@ -11,7 +11,7 @@
 #include <string>
 
 class FileReader{
-    static std::map<std::string, double>* data;
+    static std::map<std::string, double> data;
     static bool mockFlag;
 public:
     static double getData(const std::string name);     // Getting data from static map (mock/actual data)
