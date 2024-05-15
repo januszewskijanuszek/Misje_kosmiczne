@@ -10,12 +10,17 @@
 #include <map>
 #include <string>
 #include <fstream>
+#include <iostream>
 
 class FileReader{
     static std::map<std::string, double> data;
     static std::string file;
     static std::string date;
     static bool mockFlag;
+    static std::ifstream file_stream;
+
+    static inline constexpr uint16_t LINE_LENGHT = 78;
+    static inline constexpr uint16_t DATA_CHUNK = 19;
 public:
     static inline void setDate(const std::string i_date){date = i_date;};
     static inline std::string getFile() {return file;}

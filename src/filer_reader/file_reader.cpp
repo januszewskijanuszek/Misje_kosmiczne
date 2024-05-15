@@ -6,22 +6,38 @@
 
 #include "file_reader.hpp"
 #include "../static_func/static.hpp"
-#include <iostream>
-using namespace std;
 
 std::string FileReader::file;
 std::string FileReader::date;
+std::ifstream FileReader::file_stream;
 
 bool FileReader::mockFlag = false;
 std::map<std::string, double> FileReader::data;
 
+void FileReader::setFile(const std::string i_file){
+    FileReader::file = i_file;
+    std::cout << "Prompted file -> " + file << std::endl;
+    file_stream = std::ifstream(file);
+    if(!file_stream.is_open()){
+        std::cerr << file + " - not found in directory" << std::endl;
+        exit(1);
+    }
+    std::string line;
+    bool flaag = true;
+    int i = 50;
+    uint16_t linecount = 0;
+    while(std::getline(file_stream, line) && flaag){
+        linecount++;
+        if(linecount < 9) continue;
+        std::cout << line << std::endl;
+        i--;
+        if(i==0) flaag = false;
+    }
+}
+
 double FileReader::getData(const std::string key){
     return FileReader::data[key];
 } 
-void FileReader::setFile(const std::string i_file){
-    FileReader::file = i_file;
-    cout << file << endl;
-}
 bool FileReader::isMock(){return FileReader::mockFlag;}
 
 void FileReader::makeMock(){
