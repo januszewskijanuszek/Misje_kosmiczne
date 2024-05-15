@@ -7,6 +7,7 @@
 #include "static.hpp"
 #include "../filer_reader/file_reader.hpp"
 #include <cstdlib>
+#include <iostream>
 
 void internal::version_flag(){
     printf("version - 1.0\n");
@@ -27,5 +28,5 @@ void internal::help_flag(){
 }
 
 void internal::run_flag(){
-    // Future implementation
+    // std::cout << FileReader::getFile() << std::endl;
 }

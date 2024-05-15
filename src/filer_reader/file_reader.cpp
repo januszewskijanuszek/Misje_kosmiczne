@@ -6,6 +6,11 @@
 
 #include "file_reader.hpp"
 #include "../static_func/static.hpp"
+#include <iostream>
+using namespace std;
+
+std::string FileReader::file;
+std::string FileReader::date;
 
 bool FileReader::mockFlag = false;
 std::map<std::string, double> FileReader::data;
@@ -13,7 +18,10 @@ std::map<std::string, double> FileReader::data;
 double FileReader::getData(const std::string key){
     return FileReader::data[key];
 } 
-
+void FileReader::setFile(const std::string i_file){
+    FileReader::file = i_file;
+    cout << file << endl;
+}
 bool FileReader::isMock(){return FileReader::mockFlag;}
 
 void FileReader::makeMock(){
@@ -36,4 +44,8 @@ void FileReader::makeMock(){
         {"omdot",   -7.41995192792e-09},
         {"idot",    2.67153985179e-10}
     };
+}
+
+void FileReader::loadFromFile(const std::string& filename){
+    
 }

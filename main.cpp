@@ -14,6 +14,7 @@
 #include <iostream>
 
 #include "src/static_func/static.hpp"
+#include "src/filer_reader/file_reader.hpp"
 
 using predefined_function = std::function<void(void)>;
 
@@ -27,8 +28,9 @@ int main(int argc, char* argv[]){
     if(argc == 2){
         function_list[arguments.at(1)]();
     }else if(arguments.at(1) == "-f" && argc == 4){
-        internal::raw_input["filename"] = arguments.at(2);
-        internal::raw_input["date"] = arguments.at(3);
+        FileReader::setFile(arguments.at(2));
+        FileReader::setDate(arguments.at(3));
+        function_list[arguments.at(1)]();
     } else {
         printf("Too many arguments or invalid flag!\n");
         function_list["-h"]();
