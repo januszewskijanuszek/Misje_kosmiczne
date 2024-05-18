@@ -27,10 +27,15 @@ int main(int argc, char* argv[]){
     function_list["-f"] = internal::run_flag;
     if(argc == 2){
         function_list[arguments.at(1)]();
-    }else if(arguments.at(1) == "-f" && argc == 4){
+    }else if(arguments.at(1) == "-f" && argc == 9){
         FileReader::setFile(arguments.at(2));
-        FileReader::setDate(arguments.at(3));
-        function_list[arguments.at(1)]();
+        FileReader::setYear(arguments.at(3));
+        FileReader::setMonth(arguments.at(4));
+        FileReader::setDay(arguments.at(5));
+        FileReader::setHour(arguments.at(6));
+        FileReader::setMinute(arguments.at(7));
+        FileReader::setSec(arguments.at(8));
+        function_list["-f"]();
     } else {
         printf("Too many arguments or invalid flag!\n");
         function_list["-h"]();
