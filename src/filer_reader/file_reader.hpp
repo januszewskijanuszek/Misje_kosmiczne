@@ -20,7 +20,7 @@ class FileReader{
     static std::string file;
     static bool mockFlag;
     static std::ifstream file_stream;
-    static constexpr uint16_t ELEMENTS_COUNT = 22;
+    static constexpr uint16_t ELEMENTS_COUNT = 24;
     static std::map<std::string, std::string> input_date;
 
     static inline constexpr uint16_t LINE_LENGHT = 78;

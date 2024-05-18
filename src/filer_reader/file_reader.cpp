@@ -32,7 +32,9 @@ const std::array<std::string, FileReader::ELEMENTS_COUNT> FileReader::FR_names =
     "day",
     "hour",
     "min",
-    "sec"
+    "sec",
+    "tydz",
+    "week_s",
 };
 
 bool FileReader::mockFlag = false;
@@ -74,6 +76,8 @@ void FileReader::makeMock(){
         {FR_names[18],4},
         {FR_names[19],1},
         {FR_names[20],15},
-        {FR_names[21],0}
+        {FR_names[21],0},
+        {FR_names[22],2256},
+        {FR_names[23],177299.999803551}
     };
 }

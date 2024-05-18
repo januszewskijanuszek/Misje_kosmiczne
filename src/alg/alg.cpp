@@ -1,11 +1,21 @@
 #include "alg.hpp"
 
 #include <iostream>
+#include <cmath>
+
+double tk(std::map<std::string, double> *input_data){
+    return input_data->at("week_s") - input_data->at("toe");
+}
+
+double anomaliaSrednia(std::map<std::string, double> *input_data){
+    const double n0 = sqrt(internal::GM / pow(input_data->at("a"), 3));
+    const double n = n0 + input_data->at("deln");
+    return input_data->at("m0") + n * tk(input_data);
+}
 
 std::map<std::string, double> internal::getX_Y(std::map<std::string, double> *input_data){
 
-    const double czas_obl = 0.0;
-    double abomalia_sr = 0.0;
+    double abomalia_sr = anomaliaSrednia(input_data);
     double anomalia_mimosr = 0.0;
     double sin = 0.0;
     double cos = 0.0;
@@ -22,19 +32,7 @@ std::map<std::string, double> internal::getX_Y(std::map<std::string, double> *in
     double Y = 0.0;
     double Z = 0.0;
 
-    internal::countWeeks(input_data);
+    std::cout << abomalia_sr << std::endl;
 
     return {{"X", 1.0},{"Y", 1.0},{"Z", 1.0}};
-}
-
-uint32_t internal::countWeeks(std::map<std::string, double> *input_data){
-    const uint32_t endYear = static_cast<uint32_t>(input_data->at("year"));
-    const uint32_t endMonth = static_cast<uint32_t>(input_data->at("month"));
-    const uint32_t endDay = static_cast<uint32_t>(input_data->at("day"));
-
-    const uint32_t difYear = endYear - internal::startYear;
-    const uint32_t difMonth = endMonth - internal::startMonth;
-    const uint32_t difDay = endDay - internal::startDay;
-    std::cout << difYear << std::endl;
-    return 0;
 }
