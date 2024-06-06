@@ -24,7 +24,7 @@ const std::array<std::string, FileReader::ELEMENTS_COUNT> FileReader::FR_names =
     "toe",    
     "cic",
     "om0",
-    "cic",
+    "cis",
     "i0",   
     "crc",  
     "om",   
@@ -75,7 +75,7 @@ void FileReader::makeMock() {
         {FR_names[12],169.5625},
         {FR_names[13],0.944285937368},
         {FR_names[14],-7.41995192792e-09},
-        {FR_names[15],2.67153985179}
+        {FR_names[15],2.67153985179e-10}
     };
     FileReader::date_data = {
         {dates_array[0], 2023},
