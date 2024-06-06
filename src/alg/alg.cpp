@@ -50,16 +50,12 @@ map_T internal::getX_Y(map_T *input_data, map_T *input_date_data){
     double u_popraw = Fk + d_creator(input_data->at("cuc"), input_data->at("cus"), Fk);
     double r_popraw = input_data->at("a") * (1 - e * cos(anomalia_mimosr)) + d_creator(input_data->at("crc"), input_data->at("crs"), Fk);
     double i_popraw = input_data->at("i0") + input_data->at("idot") * tk(input_data, input_date_data) + d_creator(input_data->at("cic"), input_data->at("cis"), Fk);
-    double Xp = 0.0;
-    double Yp = 0.0;
-    double rektascencja_wenzla_popraw = 0.0;
-    double X = 0.0;
-    double Y = 0.0;
-    double Z = 0.0;
+    double Xp = r_popraw * cos(u_popraw);
+    double Yp = r_popraw * sin(u_popraw);
+    double rektascencja_wenzla_popraw = input_data->at("om0") + (input_data->at("omdot") - internal::omega_e) * tk(input_data, input_date_data) - internal::omega_e * input_data->at("toe");
+    double X = Xp * cos(rektascencja_wenzla_popraw) - Yp * sin(rektascencja_wenzla_popraw) * cos(i_popraw);
+    double Y = Xp * sin(rektascencja_wenzla_popraw) + Yp * cos(rektascencja_wenzla_popraw) * cos(i_popraw);
+    double Z = Yp * sin(i_popraw);
 
-    std::cout << u_popraw << std::endl;
-    std::cout << r_popraw << std::endl;
-    std::cout << i_popraw << std::endl;
-
-    return {{"X", 1.0},{"Y", 1.0},{"Z", 1.0}};
+    return {{"X", X},{"Y", Y},{"Z", Z}};
 }
