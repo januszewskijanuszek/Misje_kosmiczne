@@ -1,7 +1,7 @@
 /*
  * @file:         src/filer_reader/file_reader.hpp
  * @author:       Patryk Januszewski
- * @description:  File read conrtol
+ * @description:  Utility class for file read conrtol
  */
 
 #ifndef INPUT_HANDLER_HPP

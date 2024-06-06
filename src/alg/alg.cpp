@@ -1,3 +1,9 @@
+/*
+ * @file:         src/alg/falg.cpp
+ * @author:       Patryk Januszewski
+ * @description:  Algorithm making whole calculating magic
+ */
+
 #include "alg.hpp"
 
 #include <iostream>
