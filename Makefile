@@ -1,10 +1,13 @@
 OUTPUT_DIRECTORY := target
 
-output: $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o $(OUTPUT_DIRECTORY)/file_reader.o
-	g++ $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o $(OUTPUT_DIRECTORY)/file_reader.o -o output
+output: $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o $(OUTPUT_DIRECTORY)/file_reader.o $(OUTPUT_DIRECTORY)/alg.o
+	g++ $(OUTPUT_DIRECTORY)/main.o $(OUTPUT_DIRECTORY)/static.o $(OUTPUT_DIRECTORY)/file_reader.o $(OUTPUT_DIRECTORY)/alg.o -o output
 
 $(OUTPUT_DIRECTORY)/file_reader.o: src/filer_reader/file_reader.cpp src/filer_reader/file_reader.hpp | $(OUTPUT_DIRECTORY)
 	g++ -c src/filer_reader/file_reader.cpp -o $(OUTPUT_DIRECTORY)/file_reader.o
+
+$(OUTPUT_DIRECTORY)/alg.o: src/alg/alg.cpp src/alg/alg.hpp | $(OUTPUT_DIRECTORY)
+	g++ -c src/alg/alg.cpp -o $(OUTPUT_DIRECTORY)/alg.o
 
 $(OUTPUT_DIRECTORY)/main.o: main.cpp | $(OUTPUT_DIRECTORY)
 	g++ -c main.cpp -o $(OUTPUT_DIRECTORY)/main.o
