@@ -26,7 +26,10 @@ const std::array<std::string, FileReader::ELEMENTS_COUNT> FileReader::FR_names =
     "crc",  
     "om",   
     "omdot",
-    "idot",
+    "idot"
+};
+
+static const std::array<std::string, 8> Dates_array = {
     "year",
     "month",
     "day",
@@ -34,7 +37,7 @@ const std::array<std::string, FileReader::ELEMENTS_COUNT> FileReader::FR_names =
     "min",
     "sec",
     "tydz",
-    "week_s",
+    "week_s"
 };
 
 bool FileReader::mockFlag = false;
@@ -70,14 +73,16 @@ void FileReader::makeMock(){
         {FR_names[12],169.5625},
         {FR_names[13],0.944285937368},
         {FR_names[14],-7.41995192792e-09},
-        {FR_names[15],2.67153985179e-10},
-        {FR_names[16],2023},
-        {FR_names[17],4},
-        {FR_names[18],4},
-        {FR_names[19],1},
-        {FR_names[20],15},
-        {FR_names[21],0},
-        {FR_names[22],2256},
-        {FR_names[23],177299.999803551}
+        {FR_names[15],2.67153985179e-10}
+    };
+    FileReader::date_data = {
+        {FR_names[0],2023},
+        {FR_names[1],4},
+        {FR_names[2],4},
+        {FR_names[3],1},
+        {FR_names[4],15},
+        {FR_names[5],0},
+        {FR_names[6],2256},
+        {FR_names[7],177299.999803551}
     };
 }
