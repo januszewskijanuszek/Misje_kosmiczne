@@ -13,6 +13,10 @@ double anomaliaSrednia(map_T *input_data, map_T *input_date_data){
     return input_data->at("m0") + n * tk(input_data, input_date_data);
 }
 
+// -- LTS --
+
+
+
 map_T internal::getX_Y(map_T *input_data, map_T *input_date_data){
     double abomalia_sr = anomaliaSrednia(input_data, input_date_data);
     double anomalia_mimosr = 0.0;
