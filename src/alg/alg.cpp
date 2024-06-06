@@ -3,19 +3,18 @@
 #include <iostream>
 #include <cmath>
 
-double tk(std::map<std::string, double> *input_data){
-    return input_data->at("week_s") - input_data->at("toe");
+double tk(map_T *input_data, map_T *input_date_data){
+    return input_date_data->at("week_s") - input_data->at("toe");
 }
 
-double anomaliaSrednia(std::map<std::string, double> *input_data){
+double anomaliaSrednia(map_T *input_data, map_T *input_date_data){
     const double n0 = sqrt(internal::GM / pow(input_data->at("a"), 3));
     const double n = n0 + input_data->at("deln");
-    return input_data->at("m0") + n * tk(input_data);
+    return input_data->at("m0") + n * tk(input_data, input_date_data);
 }
 
-std::map<std::string, double> internal::getX_Y(std::map<std::string, double> *input_data){
-
-    double abomalia_sr = anomaliaSrednia(input_data);
+map_T internal::getX_Y(map_T *input_data, map_T *input_date_data){
+    double abomalia_sr = anomaliaSrednia(input_data, input_date_data);
     double anomalia_mimosr = 0.0;
     double sin = 0.0;
     double cos = 0.0;

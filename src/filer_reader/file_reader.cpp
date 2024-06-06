@@ -10,6 +10,9 @@
 std::string FileReader::file;
 std::ifstream FileReader::file_stream;
 std::map<std::string, std::string> FileReader::input_date;
+std::map<std::string, double> FileReader::data;
+std::map<std::string, double> FileReader::date_data;
+
 const std::array<std::string, FileReader::ELEMENTS_COUNT> FileReader::FR_names = {
     "crs",
     "deln",
@@ -29,7 +32,7 @@ const std::array<std::string, FileReader::ELEMENTS_COUNT> FileReader::FR_names =
     "idot"
 };
 
-static const std::array<std::string, 8> Dates_array = {
+const std::array<std::string, 8> FileReader::dates_array = {
     "year",
     "month",
     "day",
@@ -41,21 +44,20 @@ static const std::array<std::string, 8> Dates_array = {
 };
 
 bool FileReader::mockFlag = false;
-std::map<std::string, double> FileReader::data;
 
-void FileReader::setFile(const std::string i_file){
+void FileReader::setFile(const std::string i_file) {
     FileReader::file = i_file;
     std::cout << "Prompted file -> " + file << std::endl;
     file_stream = std::ifstream(file);
-    if(!file_stream.is_open()){
+    if (!file_stream.is_open()) {
         std::cerr << file + " - not found in directory" << std::endl;
         exit(1);
     }
 }
 
-bool FileReader::isMock(){return FileReader::mockFlag;}
+bool FileReader::isMock() { return FileReader::mockFlag; }
 
-void FileReader::makeMock(){
+void FileReader::makeMock() {
     FileReader::mockFlag = true;
     FileReader::data = {
         {FR_names[0], 64.65625},
@@ -73,16 +75,16 @@ void FileReader::makeMock(){
         {FR_names[12],169.5625},
         {FR_names[13],0.944285937368},
         {FR_names[14],-7.41995192792e-09},
-        {FR_names[15],2.67153985179e-10}
+        {FR_names[15],2.67153985179}
     };
     FileReader::date_data = {
-        {FR_names[0],2023},
-        {FR_names[1],4},
-        {FR_names[2],4},
-        {FR_names[3],1},
-        {FR_names[4],15},
-        {FR_names[5],0},
-        {FR_names[6],2256},
-        {FR_names[7],177299.999803551}
+        {dates_array[0], 2023},
+        {dates_array[1], 4},
+        {dates_array[2], 4},
+        {dates_array[3], 1},
+        {dates_array[4], 15},
+        {dates_array[5], 0},
+        {dates_array[6], 2256},
+        {dates_array[7], 177299.999803551}
     };
 }

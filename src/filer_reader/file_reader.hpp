@@ -28,6 +28,10 @@ class FileReader{
     static inline constexpr uint16_t LINE_LENGHT = 78;      // Lenght of the whole section of elements in ".23n" file
     static inline constexpr uint16_t DATA_CHUNK = 19;       // Lenght of the one element in the file ".23n"
 public:
+    /*
+        Bunch of inlined functiuons, mostly getter and setters. 
+        If complex thing is going on here then explenation will be in following line.
+    */
     static inline void setYear(const std::string i_d){input_date["year"] = i_d;};
     static inline void setMonth(const std::string i_d){input_date["month"] = i_d;};
     static inline void setDay(const std::string i_d){input_date["day"] = i_d;};
@@ -37,13 +41,15 @@ public:
     static inline std::string getFile() {return file;}
     static inline std::string getDate(const std::string inp) {return input_date[inp];}
 
+    static inline map_T* getData(){return &data;};                  // Getting addres for actual data
+    static inline map_T* getTimeData(){return &date_data;};         
+
     static void setFile(const std::string i_file);                  // Setting file for Read status
 
-    static inline map_T* getData(){return &data;};                  // Getting data from static map (mock/actual data)
     static void makeMock();                                         // Creates mock for testing purposes
     static bool isMock();                                           // Check if data created are mocked
     static const std::array<std::string, ELEMENTS_COUNT> FR_names;  // List of elements names (used for easy printout all required data to check)
-    static const std::array<std::string, 8> Dates_array;            // Set of names for the date elements
+    static const std::array<std::string, 8> dates_array;            // Set of names for the date elements
 };
 
 #endif // INPUT_HANDLER_HPP

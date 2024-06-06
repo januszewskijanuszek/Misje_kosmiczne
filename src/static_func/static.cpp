@@ -18,11 +18,11 @@ void internal::run_flag(){
     if(!FileReader::isMock){
         std::cout << "Is not mock" << std::endl;
     }
-    for(auto &element : FileReader::FR_names){
+    for(const auto &element : FileReader::FR_names){
         std::cout << element << "\t " << FileReader::getData() -> at(element) << std::endl;
     }
     std::cout << "-----------------------" << std::endl;
-    const std::map<std::string, double> coordinates = internal::getX_Y(FileReader::getData());
+    const map_T coordinates = internal::getX_Y(FileReader::getData(), FileReader::getTimeData());
     std::cout << "X\t" << coordinates.at("X") << std::endl;
     std::cout << "Y\t" << coordinates.at("Y")  << std::endl;
     std::cout << "Z\t" << coordinates.at("Z")  << std::endl;
