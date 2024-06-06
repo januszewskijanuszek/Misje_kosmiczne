@@ -22,11 +22,22 @@ double anomaliaMimosr(const double &anomalia_sr, const double &e,const uint32_t 
     return Ek;
 }
 
-// -- LTS --
-
 double anomaliaPrawdziwa(const double &momosrod, const double &e){
     return (2 * atan2(sqrt(1 + e) * sin(momosrod / 2), sqrt(1 - e) * cos(momosrod / 2)));
 }
+
+// -- LTS --
+
+double Vk_f(const double &momosrod, const double &e){
+    double sin_E = sin(momosrod);
+    double cos_E = cos(momosrod);
+    double sqrt_term = sqrt(1 - pow(e, 2));
+    
+    double Vk = atan2(sqrt_term * sin_E, cos_E - e);
+    
+    return Vk;
+}
+
 
 map_T internal::getX_Y(map_T *input_data, map_T *input_date_data){
     const double &e = input_data -> at("e");
@@ -34,7 +45,7 @@ map_T internal::getX_Y(map_T *input_data, map_T *input_date_data){
     double abomalia_sr = anomaliaSrednia(input_data, input_date_data);
     double anomalia_mimosr = anomaliaMimosr(abomalia_sr, e);
     double nu = anomaliaPrawdziwa(anomalia_mimosr, e);
-    double anomalia_praw_pery = 0.0;
+    double anomalia_praw_pery = Vk_f(anomalia_mimosr, e);
     double u_popraw = 0.0;
     double r_popraw = 0.0;
     double i_popraw = 0.0;
@@ -45,7 +56,7 @@ map_T internal::getX_Y(map_T *input_data, map_T *input_date_data){
     double Y = 0.0;
     double Z = 0.0;
 
-    std::cout << nu << std::endl;
+    std::cout << anomalia_praw_pery << std::endl;
 
     return {{"X", 1.0},{"Y", 1.0},{"Z", 1.0}};
 }
