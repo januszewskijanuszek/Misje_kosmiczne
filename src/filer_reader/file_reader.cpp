@@ -70,7 +70,16 @@ void FileReader::extractData(const std::string &seconds, const std::string &minu
             std::cerr << "Invalid time format" << std::endl;
             exit(EXIT_FAILURE);
         }
-        
+        printf("\n");
+        std::string line;
+        int counter = 0; 
+        while (std::getline(FileReader::file_stream, line) && counter < 8) {
+            std::cout << line << std::endl;
+            if(counter == 5){
+                FileReader::date_data["tydz"] = std::stod(line.substr(55, 4));
+            }
+            counter ++;
+        }
     }catch (const std::invalid_argument& e) {
         std::cerr << "Invalid argument: " << e.what() << std::endl;
     }
