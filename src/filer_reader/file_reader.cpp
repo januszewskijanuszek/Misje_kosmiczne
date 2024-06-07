@@ -64,7 +64,7 @@ void FileReader::extractData(const std::string &sv, const std::string &seconds, 
     }
     try{
         const double sec = std::stod(seconds);
-        const double min = std::stod(minutes);
+        const uint32_t min = std::stoul(minutes);
         const uint32_t hour = std::stoul(hours);
         const uint32_t dec_sv = std::stoul(sv);
         if(sec  >= 60 || sec < 0 || min >= 60 || min < 0 || hour >= 24 || hour < 0){
@@ -79,20 +79,30 @@ void FileReader::extractData(const std::string &sv, const std::string &seconds, 
                 FileReader::date_data["tydz"] = std::stod(line.substr(55, 4));
             }
         }
-        uint16_t counter = 0;
+        uint16_t* counter = new uint16_t(0);
+        bool* rowFound = new bool(false);
         while (std::getline(file_stream, line)){
-            if(counter == FileReader::CHUNK_ROWS) counter = 0;
-            if(counter == 0){
+            if(*counter == FileReader::CHUNK_ROWS) *counter = 0;
+            if(*counter == 0){
                 if( std::stoul(line.substr(0,2)) == dec_sv && 
                     std::stoul(line.substr(12, 2)) <= hour &&
                     std::stoul(line.substr(12, 2)) + 2 > hour){
-                        
+                    *rowFound = true;
                     std::cout << line << std::endl;
-                    std::cout << line.substr(12, 10) << std::endl;
+                    // std::cout << line.substr(12, 10) << std::endl;
                 }
             }
-            counter ++;
+            if(*rowFound){
+                for(uint8_t i = 0 ; i < 7 ; i++){
+                    std::getline(file_stream, line);
+                    std::cout << line << std::endl;
+                }
+                break;
+            }
+            (*counter) ++;
         }
+        delete rowFound;
+        delete counter;
     }catch (const std::invalid_argument& e) {
         std::cerr << "Invalid argument: " << e.what() << std::endl;
     }
