@@ -6,6 +6,7 @@
 
 #include "file_reader.hpp"
 #include "../static_func/static.hpp"
+#include <cstdlib>
 
 std::string FileReader::file;
 std::ifstream FileReader::file_stream;
@@ -51,11 +52,9 @@ void FileReader::setFile(const std::string i_file) {
     file_stream = std::ifstream(file);
     if (!file_stream.is_open()) {
         std::cerr << file + " - not found in directory" << std::endl;
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
-
-bool FileReader::isMock() { return FileReader::mockFlag; }
 
 void FileReader::makeMock() {
     FileReader::mockFlag = true;

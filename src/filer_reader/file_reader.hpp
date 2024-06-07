@@ -41,7 +41,7 @@ public:
     static void setFile(const std::string i_file);                  // Setting file for Read status
 
     static void makeMock();                                         // Creates mock for testing purposes
-    static bool isMock();                                           // Check if data created are mocked
+    static inline bool isMock() { return FileReader::mockFlag; }    // Check if data created are mocked
     static const std::array<std::string, ELEMENTS_COUNT> FR_names;  // List of elements names (used for easy printout all required data to check)
     static const std::array<std::string, 8> dates_array;            // Set of names for the date elements
 };
