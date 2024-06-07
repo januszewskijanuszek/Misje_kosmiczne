@@ -26,6 +26,8 @@ class FileReader{
 
     static inline constexpr uint16_t LINE_LENGHT = 78;      // Lenght of the whole section of elements in ".23n" file
     static inline constexpr uint16_t DATA_CHUNK = 19;       // Lenght of the one element in the file ".23n"
+    static inline constexpr uint16_t DATE_CHUNK = 10;       // Lenght of the one element in the file ".23n"
+    static inline constexpr uint16_t CHUNK_ROWS = 8;        // Lenght of rows in each chunk
 public:
     /*
         Bunch of inlined functiuons, mostly getter and setters. 
@@ -38,7 +40,7 @@ public:
     static inline map_T* getTimeData(){return &date_data;};         
 
     static void setFile(const std::string i_file);                  // Setting file for Read status
-    static void extractData(const std::string &seconds, const std::string &minutes, const std::string &hours);
+    static void extractData(const std::string &sv, const std::string &seconds, const std::string &minutes, const std::string &hours);
 
     static void makeMock();                                         // Creates mock for testing purposes
     static inline bool isMock() { return FileReader::mockFlag; }    // Check if data created are mocked

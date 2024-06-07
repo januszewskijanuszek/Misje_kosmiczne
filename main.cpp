@@ -29,9 +29,9 @@ int main(int argc, char* argv[]){
     function_list["-f"] = internal::run_flag;
     if(argc == 2){
         function_list[arguments.at(1)]();
-    }else if(arguments.at(1) == "-f" && argc == 6){
+    }else if(arguments.at(1) == "-f" && argc == 7){
         FileReader::setFile(arguments.at(2));
-        FileReader::extractData(arguments.at(3), arguments.at(4), arguments.at(5));
+        FileReader::extractData(arguments.at(3), arguments.at(4), arguments.at(5), arguments.at(6));
         function_list["-f"]();
     } else {
         printf("Too many arguments or invalid flag!\n");

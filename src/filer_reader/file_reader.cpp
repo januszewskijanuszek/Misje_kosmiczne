@@ -57,26 +57,39 @@ void FileReader::setFile(const std::string i_file) {
     }
 }
 
-void FileReader::extractData(const std::string &seconds, const std::string &minutes, const std::string &hours){
+void FileReader::extractData(const std::string &sv, const std::string &seconds, const std::string &minutes, const std::string &hours){
     if (!FileReader::file_stream.is_open()) {
         std::cerr << "First set the file" << std::endl;
         exit(EXIT_FAILURE);
     }
     try{
-        double sec = std::stod(seconds);
-        double min = std::stod(minutes);
-        double hour = std::stod(hours);
+        const double sec = std::stod(seconds);
+        const double min = std::stod(minutes);
+        const uint32_t hour = std::stoul(hours);
+        const uint32_t dec_sv = std::stoul(sv);
         if(sec  >= 60 || sec < 0 || min >= 60 || min < 0 || hour >= 24 || hour < 0){
             std::cerr << "Invalid time format" << std::endl;
             exit(EXIT_FAILURE);
         }
         printf("\n");
         std::string line;
-        int counter = 0; 
-        while (std::getline(FileReader::file_stream, line) && counter < 8) {
+        for(uint8_t i = 0; std::getline(FileReader::file_stream, line) && i < 7 ; i++){
             std::cout << line << std::endl;
-            if(counter == 5){
+            if(i == 5){
                 FileReader::date_data["tydz"] = std::stod(line.substr(55, 4));
+            }
+        }
+        uint16_t counter = 0;
+        while (std::getline(file_stream, line)){
+            if(counter == FileReader::CHUNK_ROWS) counter = 0;
+            if(counter == 0){
+                if( std::stoul(line.substr(0,2)) == dec_sv && 
+                    std::stoul(line.substr(12, 2)) <= hour &&
+                    std::stoul(line.substr(12, 2)) + 2 > hour){
+                        
+                    std::cout << line << std::endl;
+                    std::cout << line.substr(12, 10) << std::endl;
+                }
             }
             counter ++;
         }
