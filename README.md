@@ -18,8 +18,8 @@
 
     Help            -h - Display help
     Version         -v - Display version
-    File            -f - [filename] [date dd-mm-rrrr]
-                example: -f brdc0940.23n 15-10-2015
+    File            -f - [filename] [hour ss mm hh]
+                example: -f brdc0940.23n 30 20 22
 
 ## Dodatkowe komendy
-- `make clear` - Czyszczenie outputu
+- `make clean` - Czyszczenie outputu

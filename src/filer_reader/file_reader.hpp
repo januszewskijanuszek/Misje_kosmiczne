@@ -32,12 +32,6 @@ public:
         Bunch of inlined functiuons, mostly getter and setters. 
         If complex thing is going on here then explenation will be in following line.
     */
-    static inline void setYear(const std::string i_d){input_date["year"] = i_d;};
-    static inline void setMonth(const std::string i_d){input_date["month"] = i_d;};
-    static inline void setDay(const std::string i_d){input_date["day"] = i_d;};
-    static inline void setHour(const std::string i_d){input_date["hour"] = i_d;};
-    static inline void setMinute(const std::string i_d){input_date["min"] = i_d;};
-    static inline void setSec(const std::string i_d){input_date["sec"] = i_d;};
     static inline std::string getFile() {return file;}
     static inline std::string getDate(const std::string inp) {return input_date[inp];}
 
