@@ -45,6 +45,16 @@ const std::array<std::string, 8> FileReader::dates_array = {
     "week_s"
 };
 
+double FileReader::extractNumber(const std::string &string){
+    std::string coppy = string;
+    size_t position = coppy.find('D');
+    if (position != std::string::npos) {
+        coppy.replace(position, 1, "E");
+        position += 1;
+    }
+    return std::stod(coppy);
+}
+
 bool FileReader::mockFlag = false;
 
 void FileReader::setFile(const std::string i_file) {
@@ -89,18 +99,59 @@ void FileReader::extractData(const std::string &sv, const std::string &seconds, 
                     std::stoul(line.substr(12, 2)) + 2 > hour){
                     *rowFound = true;
                     std::cout << line << std::endl;
-                    // std::cout << line.substr(12, 10) << std::endl;
+                    date_data["year"] = std::stod("20" + line.substr(3,2));
+                    date_data["month"] = std::stod(line.substr(6,2));
+                    date_data["day"] = std::stod(line.substr(9,2));
+                    date_data["hour"] = hour;
+                    date_data["min"] = min;
+                    date_data["sec"] = sec;
+                    date_data["week_s"] = 0.0;
                 }
             }
             if(*rowFound){
-                for(uint8_t i = 0 ; i < 7 ; i++){
-                    std::getline(file_stream, line);
-                    std::cout << line << std::endl;
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                FileReader::data["crs"] = extractNumber(
+                    line.substr(FileReader::PADDING + FileReader::DATA_CHUNK, 
+                    FileReader::DATA_CHUNK));
+                FileReader::data["deln"] = extractNumber(
+                    line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * 2, 
+                    FileReader::DATA_CHUNK));
+                FileReader::data["m0"] = extractNumber(
+                    line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * 3, 
+                    FileReader::DATA_CHUNK));
+                
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                for(uint32_t i = 3 ; i < 7 ; i++){
+                    FileReader::data[FR_names.at(i)] = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * (i - 3), 
+                        FileReader::DATA_CHUNK));
                 }
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                for(uint32_t i = 7 ; i < 11 ; i++){
+                    FileReader::data[FR_names.at(i)] = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * (i - 7), 
+                        FileReader::DATA_CHUNK));
+                }
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                for(uint32_t i = 11 ; i < 15 ; i++){
+                    FileReader::data[FR_names.at(i)] = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * (i - 11), 
+                        FileReader::DATA_CHUNK));
+                }
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                FileReader::data["idot"] = extractNumber(
+                    line.substr(FileReader::PADDING, FileReader::DATA_CHUNK));
+                FileReader::printData();
                 break;
             }
             (*counter) ++;
         }
+        FileReader::printTimeData();
         delete rowFound;
         delete counter;
     }catch (const std::invalid_argument& e) {

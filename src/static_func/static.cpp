@@ -15,9 +15,6 @@ void internal::version_flag(){
 }
 
 void internal::run_flag(){
-    if(!FileReader::isMock()){
-        printf("Mock not loaded\n");
-    }
     for(const auto &element : FileReader::FR_names){
         // std::cout << element << "\t " << FileReader::getData() -> at(element) << std::endl;
     }
