@@ -7,6 +7,7 @@
 #include "file_reader.hpp"
 #include "../static_func/static.hpp"
 #include <cstdlib>
+#include <string>
 
 std::string FileReader::file;
 std::ifstream FileReader::file_stream;
@@ -53,6 +54,25 @@ void FileReader::setFile(const std::string i_file) {
     if (!file_stream.is_open()) {
         std::cerr << file + " - not found in directory" << std::endl;
         exit(EXIT_FAILURE);
+    }
+}
+
+void FileReader::extractData(const std::string &seconds, const std::string &minutes, const std::string &hours){
+    if (!FileReader::file_stream.is_open()) {
+        std::cerr << "First set the file" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    try{
+        double sec = std::stod(seconds);
+        double min = std::stod(minutes);
+        double hour = std::stod(hours);
+        if(sec  >= 60 || sec < 0 || min >= 60 || min < 0 || hour >= 24 || hour < 0){
+            std::cerr << "Invalid time format" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        
+    }catch (const std::invalid_argument& e) {
+        std::cerr << "Invalid argument: " << e.what() << std::endl;
     }
 }
 

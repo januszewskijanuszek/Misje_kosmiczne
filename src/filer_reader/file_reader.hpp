@@ -21,7 +21,6 @@ class FileReader{
     // ---------------------- //
     static std::string file;
     static bool mockFlag;
-    static std::ifstream file_stream;
     static constexpr uint16_t ELEMENTS_COUNT = 16;
     static std::map<std::string, std::string> input_date;   
 
@@ -32,13 +31,14 @@ public:
         Bunch of inlined functiuons, mostly getter and setters. 
         If complex thing is going on here then explenation will be in following line.
     */
-    static inline std::string getFile() {return file;}
+    static std::ifstream file_stream;
     static inline std::string getDate(const std::string inp) {return input_date[inp];}
 
     static inline map_T* getData(){return &data;};                  // Getting addres for actual data
     static inline map_T* getTimeData(){return &date_data;};         
 
     static void setFile(const std::string i_file);                  // Setting file for Read status
+    static void extractData(const std::string &seconds, const std::string &minutes, const std::string &hours);
 
     static void makeMock();                                         // Creates mock for testing purposes
     static inline bool isMock() { return FileReader::mockFlag; }    // Check if data created are mocked

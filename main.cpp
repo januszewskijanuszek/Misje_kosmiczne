@@ -31,6 +31,7 @@ int main(int argc, char* argv[]){
         function_list[arguments.at(1)]();
     }else if(arguments.at(1) == "-f" && argc == 6){
         FileReader::setFile(arguments.at(2));
+        FileReader::extractData(arguments.at(3), arguments.at(4), arguments.at(5));
         function_list["-f"]();
     } else {
         printf("Too many arguments or invalid flag!\n");
