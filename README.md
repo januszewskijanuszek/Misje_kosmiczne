@@ -18,8 +18,8 @@
 
     Help            -h - Display help
     Version         -v - Display version
-    File            -f - [filename] [Sv] [hour ss mm hh]
-                example: -f brdc0940.23n 1 30 20 22
+    File            -f - [filename] [Sv] clock - [ss mm hh]
+                    example: -f brdc0940.23n 1 30 20 22
 
 ## Dodatkowe komendy
 - `make clean` - Czyszczenie outputu

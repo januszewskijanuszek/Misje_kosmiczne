@@ -36,6 +36,6 @@ void internal::help_flag(){
     printf("Help\t-h - Display help\n");
     printf("Version\t-v - Display version\n");
     printf("Mock\t-m - Preview program without any input\n");
-    printf("File\t-f - [filename] [Sv]  time - [ss mm hh]\n");
-    printf(" \texample: -f brdc0940.23n 1 0 20 12 \n");
+    printf("File\t-f - [filename] [Sv]  clock - [ss mm hh]\n");
+    printf(" \texample: -f brdc0940.23n 1 30 20 22 \n");
 }
