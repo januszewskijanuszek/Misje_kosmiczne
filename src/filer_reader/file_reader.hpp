@@ -42,13 +42,17 @@ public:
     static inline map_T* getData(){return &data;};                  // Getting addres for actual data
     static inline map_T* getTimeData(){return &date_data;};
 
-    static inline void printTimeData(){
+    // Printing out Time Data to std out
+    static inline void printTimeData(){                             
         std::cout << std::fixed << std::setprecision(0);
         for(const auto &element : FileReader::dates_array){
+            if(element == "week_s") std::cout << std::fixed << std::setprecision(15);
             std::cout << element << "\t" << date_data.at(element) << std::endl;
         }
         std::cout << std::fixed << std::setprecision(15);
     }
+
+    // Printing out Data to std out
     static inline void printData(){
         for(const auto &element : FileReader::FR_names){
             std::cout << element << "\t" << data.at(element) << std::endl;

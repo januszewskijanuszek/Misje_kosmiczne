@@ -15,19 +15,19 @@ void internal::version_flag(){
 }
 
 void internal::run_flag(){
-    for(const auto &element : FileReader::FR_names){
-        // std::cout << element << "\t " << FileReader::getData() -> at(element) << std::endl;
-    }
+    FileReader::printTimeData();
     std::cout << "-----------------------" << std::endl;
-    // const map_T coordinates = internal::getX_Y(FileReader::getData(), FileReader::getTimeData());
-    // std::cout << "X\t" << coordinates.at("X") << std::endl;
-    // std::cout << "Y\t" << coordinates.at("Y")  << std::endl;
-    // std::cout << "Z\t" << coordinates.at("Z")  << std::endl;
+    const map_T coordinates = internal::getX_Y(FileReader::getData(), FileReader::getTimeData());
+    std::cout << "X\t" << coordinates.at("X") << std::endl;
+    std::cout << "Y\t" << coordinates.at("Y")  << std::endl;
+    std::cout << "Z\t" << coordinates.at("Z")  << std::endl;
 }
 
 void internal::run_mock(){
     FileReader::makeMock();
     if(FileReader::isMock) printf("Mock loaded\n");
+    FileReader::printData();
+    FileReader::printTimeData();
     internal::run_flag();
 }
 

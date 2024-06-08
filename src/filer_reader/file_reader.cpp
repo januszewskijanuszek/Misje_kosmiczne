@@ -8,6 +8,7 @@
 #include "../static_func/static.hpp"
 #include <cstdlib>
 #include <string>
+#include <cmath>
 
 std::string FileReader::file;
 std::ifstream FileReader::file_stream;
@@ -73,6 +74,10 @@ void FileReader::extractData(const std::string &sv, const std::string &seconds, 
         exit(EXIT_FAILURE);
     }
     try{
+        static double a0;
+        static double a1;
+        static double a2;
+
         const double sec = std::stod(seconds);
         const uint32_t min = std::stoul(minutes);
         const uint32_t hour = std::stoul(hours);
@@ -91,6 +96,7 @@ void FileReader::extractData(const std::string &sv, const std::string &seconds, 
         }
         uint16_t* counter = new uint16_t(0);
         bool* rowFound = new bool(false);
+        
         while (std::getline(file_stream, line)){
             if(*counter == FileReader::CHUNK_ROWS) *counter = 0;
             if(*counter == 0){
@@ -106,6 +112,15 @@ void FileReader::extractData(const std::string &sv, const std::string &seconds, 
                     date_data["min"] = min;
                     date_data["sec"] = sec;
                     date_data["week_s"] = 0.0;
+                    a0 = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK, 
+                        FileReader::DATA_CHUNK));
+                    a1 = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * 2, 
+                        FileReader::DATA_CHUNK));
+                    a2 = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * 3, 
+                        FileReader::DATA_CHUNK));
                 }
             }
             if(*rowFound){
@@ -146,12 +161,15 @@ void FileReader::extractData(const std::string &sv, const std::string &seconds, 
                 std::cout << line << std::endl;
                 FileReader::data["idot"] = extractNumber(
                     line.substr(FileReader::PADDING, FileReader::DATA_CHUNK));
-                FileReader::printData();
+                FileReader::data["a"] = std::pow(FileReader::data["a"], 2);
+                const double t = FileReader::data["toe"] + hour * 3600 + min * 60 + sec;
+                const double toc = FileReader::data["toe"] + hour * 3600 + min * 60 + sec;
+                const double sv_clock_correection = a0 + a1 * (t - toc) + a2 * std::pow((t - toc), 2);
+                FileReader::date_data["week_s"] = FileReader::data["toe"] + hour * 3600 + min * 60 + sec + sv_clock_correection;
                 break;
             }
             (*counter) ++;
         }
-        FileReader::printTimeData();
         delete rowFound;
         delete counter;
     }catch (const std::invalid_argument& e) {
