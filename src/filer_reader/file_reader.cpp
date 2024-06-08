@@ -6,6 +6,9 @@
 
 #include "file_reader.hpp"
 #include "../static_func/static.hpp"
+#include <cstdlib>
+#include <string>
+#include <cmath>
 
 std::string FileReader::file;
 std::ifstream FileReader::file_stream;
@@ -43,6 +46,16 @@ const std::array<std::string, 8> FileReader::dates_array = {
     "week_s"
 };
 
+double FileReader::extractNumber(const std::string &string){
+    std::string coppy = string;
+    size_t position = coppy.find('D');
+    if (position != std::string::npos) {
+        coppy.replace(position, 1, "E");
+        position += 1;
+    }
+    return std::stod(coppy);
+}
+
 bool FileReader::mockFlag = false;
 
 void FileReader::setFile(const std::string i_file) {
@@ -51,11 +64,118 @@ void FileReader::setFile(const std::string i_file) {
     file_stream = std::ifstream(file);
     if (!file_stream.is_open()) {
         std::cerr << file + " - not found in directory" << std::endl;
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }
 
-bool FileReader::isMock() { return FileReader::mockFlag; }
+void FileReader::extractData(const std::string &sv, const std::string &seconds, const std::string &minutes, const std::string &hours){
+    if (!FileReader::file_stream.is_open()) {
+        std::cerr << "First set the file" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    try{
+        static double a0;
+        static double a1;
+        static double a2;
+
+        const double sec = std::stod(seconds);
+        const uint32_t min = std::stoul(minutes);
+        const uint32_t hour = std::stoul(hours);
+        const uint32_t dec_sv = std::stoul(sv);
+        if(sec  >= 60 || sec < 0 || min >= 60 || min < 0 || hour >= 24 || hour < 0){
+            std::cerr << "Invalid time format" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        printf("\n");
+        std::string line;
+        for(uint8_t i = 0; std::getline(FileReader::file_stream, line) && i < 7 ; i++){
+            std::cout << line << std::endl;
+            if(i == 5){
+                FileReader::date_data["tydz"] = std::stod(line.substr(55, 4));
+            }
+        }
+        uint16_t* counter = new uint16_t(0);
+        bool* rowFound = new bool(false);
+        
+        while (std::getline(file_stream, line)){
+            if(*counter == FileReader::CHUNK_ROWS) *counter = 0;
+            if(*counter == 0){
+                if( std::stoul(line.substr(0,2)) == dec_sv && 
+                    std::stoul(line.substr(12, 2)) <= hour &&
+                    std::stoul(line.substr(12, 2)) + 2 > hour){
+                    *rowFound = true;
+                    std::cout << line << std::endl;
+                    date_data["year"] = std::stod("20" + line.substr(3,2));
+                    date_data["month"] = std::stod(line.substr(6,2));
+                    date_data["day"] = std::stod(line.substr(9,2));
+                    date_data["hour"] = hour;
+                    date_data["min"] = min;
+                    date_data["sec"] = sec;
+                    date_data["week_s"] = 0.0;
+                    a0 = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK, 
+                        FileReader::DATA_CHUNK));
+                    a1 = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * 2, 
+                        FileReader::DATA_CHUNK));
+                    a2 = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * 3, 
+                        FileReader::DATA_CHUNK));
+                }
+            }
+            if(*rowFound){
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                FileReader::data["crs"] = extractNumber(
+                    line.substr(FileReader::PADDING + FileReader::DATA_CHUNK, 
+                    FileReader::DATA_CHUNK));
+                FileReader::data["deln"] = extractNumber(
+                    line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * 2, 
+                    FileReader::DATA_CHUNK));
+                FileReader::data["m0"] = extractNumber(
+                    line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * 3, 
+                    FileReader::DATA_CHUNK));
+                
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                for(uint32_t i = 3 ; i < 7 ; i++){
+                    FileReader::data[FR_names.at(i)] = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * (i - 3), 
+                        FileReader::DATA_CHUNK));
+                }
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                for(uint32_t i = 7 ; i < 11 ; i++){
+                    FileReader::data[FR_names.at(i)] = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * (i - 7), 
+                        FileReader::DATA_CHUNK));
+                }
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                for(uint32_t i = 11 ; i < 15 ; i++){
+                    FileReader::data[FR_names.at(i)] = extractNumber(
+                        line.substr(FileReader::PADDING + FileReader::DATA_CHUNK * (i - 11), 
+                        FileReader::DATA_CHUNK));
+                }
+                std::getline(file_stream, line);
+                std::cout << line << std::endl;
+                FileReader::data["idot"] = extractNumber(
+                    line.substr(FileReader::PADDING, FileReader::DATA_CHUNK));
+                FileReader::data["a"] = std::pow(FileReader::data["a"], 2);
+                const double t = FileReader::data["toe"] + hour * 3600 + min * 60 + sec;
+                const double toc = FileReader::data["toe"] + hour * 3600 + min * 60 + sec;
+                const double sv_clock_correection = a0 + a1 * (t - toc) + a2 * std::pow((t - toc), 2);
+                FileReader::date_data["week_s"] = FileReader::data["toe"] + hour * 3600 + min * 60 + sec + sv_clock_correection;
+                break;
+            }
+            (*counter) ++;
+        }
+        delete rowFound;
+        delete counter;
+    }catch (const std::invalid_argument& e) {
+        std::cerr << "Invalid argument: " << e.what() << std::endl;
+    }
+}
 
 void FileReader::makeMock() {
     FileReader::mockFlag = true;

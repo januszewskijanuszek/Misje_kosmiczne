@@ -15,12 +15,7 @@ void internal::version_flag(){
 }
 
 void internal::run_flag(){
-    if(!FileReader::isMock){
-        std::cout << "Is not mock" << std::endl;
-    }
-    for(const auto &element : FileReader::FR_names){
-        std::cout << element << "\t " << FileReader::getData() -> at(element) << std::endl;
-    }
+    FileReader::printTimeData();
     std::cout << "-----------------------" << std::endl;
     const map_T coordinates = internal::getX_Y(FileReader::getData(), FileReader::getTimeData());
     std::cout << "X\t" << coordinates.at("X") << std::endl;
@@ -31,6 +26,8 @@ void internal::run_flag(){
 void internal::run_mock(){
     FileReader::makeMock();
     if(FileReader::isMock) printf("Mock loaded\n");
+    FileReader::printData();
+    FileReader::printTimeData();
     internal::run_flag();
 }
 
@@ -39,6 +36,6 @@ void internal::help_flag(){
     printf("Help\t-h - Display help\n");
     printf("Version\t-v - Display version\n");
     printf("Mock\t-m - Preview program without any input\n");
-    printf("File\t-f - [filename] [date rrrr mm dd gg min sec]\n");
-    printf(" \texample: -f brdc0940.23n 2015 05 10 04 10 15 \n");
+    printf("File\t-f - [filename] [Sv]  clock - [ss mm hh]\n");
+    printf(" \texample: -f brdc0940.23n 1 30 20 22 \n");
 }
