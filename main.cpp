@@ -11,7 +11,7 @@
 #include <functional>
 #include <cstdlib>
 #include <iomanip>
-
+#include <chrono>
 #include <iostream>
 
 #include "src/static_func/static.hpp"
@@ -20,6 +20,7 @@
 using predefined_function = std::function<void(void)>;
 
 int main(int argc, char* argv[]){
+    auto start = std::chrono::high_resolution_clock::now();
     std::cout << std::fixed << std::setprecision(15);
     const std::vector<std::string> arguments(argv, argv + argc);
     std::map<std::string, predefined_function> function_list;
@@ -37,5 +38,9 @@ int main(int argc, char* argv[]){
         printf("Too many arguments or invalid flag!\n");
         function_list["-h"]();
     }
+    std::cout << std::fixed << std::setprecision(6);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+    std::cout << "Czas wykonania: " << duration.count() << " sekund" << std::endl;
     return EXIT_SUCCESS;
 }

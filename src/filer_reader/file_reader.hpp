@@ -25,7 +25,6 @@ class FileReader{
     static constexpr uint16_t ELEMENTS_COUNT = 16;
     static std::map<std::string, std::string> input_date;   
 
-    static inline constexpr uint16_t LINE_LENGHT = 78;      // Lenght of the whole section of elements in ".23n" file
     static inline constexpr uint16_t DATA_CHUNK = 19;       // Lenght of the one element in the file ".23n"
     static inline constexpr uint16_t DATE_CHUNK = 10;       // Lenght of the one element in the file ".23n"
     static inline constexpr uint16_t CHUNK_ROWS = 8;        // Lenght of rows in each chunk
