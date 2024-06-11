@@ -21,8 +21,9 @@ double anomaliaSrednia(map_T *input_data, map_T *input_date_data){
     return input_data->at("m0") + n * tk(input_data, input_date_data);
 }
 
-double anomaliaMimosr(const double &anomalia_sr, const double &e,const uint32_t iteracions = 100){
+double anomaliaMimosr(const double &anomalia_sr, const double &e,uint32_t iteracions = 100){
     double Ek = 0;
+    if(iteracions <= 0) iteracions = 1;
     for(uint32_t i = 0 ; i < iteracions ; i++)
         Ek = anomalia_sr + e * sin(Ek);
     return Ek;
